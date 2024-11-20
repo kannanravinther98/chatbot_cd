@@ -3,7 +3,7 @@ import openai
 import os
 
 # Use the API key from the GitHub Actions secret (e.g., 'KANNAN')
-API_KEY = os.getenv("KANNAN")
+API_KEY = os.getenv(KANNAN)
 
 if not API_KEY:
     st.error("No API key found. Please ensure the 'KANNAN' secret is set correctly in GitHub Actions.")
