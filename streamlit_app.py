@@ -3,10 +3,9 @@ import openai
 import os
 
 # Load environment variables from a .env file (if using for local development)
-load_dotenv()
 
 # Embed the OpenAI API key securely
-API_KEY = os.getenv("OPENAI_API_KEY", "")  # Replace with your key in .env or environment variable
+API_KEY =kannan  # Replace with your key in .env or environment variable
 
 # Allow user to override the key if it's not set via environment variables
 if not API_KEY:
