@@ -3,7 +3,7 @@ import openai
 import os
 
 # Fetch the API key from the environment
-api_key = st.secrets["kannan"]
+api_key = st.secrets[kannan]
 
 if not api_key:
     st.error("The secret 'kannan' is not set or missing. Please ensure it is configured correctly in your environment.")
