@@ -6,7 +6,7 @@ import os
 api_key = os.getenv("kannan")
 
 if not api_key:
-    st.error("The secret 'KANNAN' is not set or missing. Please ensure it is configured correctly in your environment.")
+    st.error("The secret 'kannan' is not set or missing. Please ensure it is configured correctly in your environment.")
 else:
     # Set the OpenAI API key
     openai.api_key = api_key
