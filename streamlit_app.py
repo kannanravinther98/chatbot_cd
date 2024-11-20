@@ -8,12 +8,7 @@ OPENAI_API_KEY = st.secrets["OPENAI_API_KEY"]
 
 # Initialize the OpenAI instance
 openai = OpenAI(api_key=OPENAI_API_KEY)
-if not api_key:
-    st.error("The secret 'kannan' is not set or missing. Please ensure it is configured correctly in your environment.")
-else:
-    # Set the OpenAI API key
-    openai.api_key = api_key
-    st.success("The secret 'KANNAN' is set successfully.")
+
 
     # Example: Streamlit app with OpenAI ChatCompletion
     st.title("💬 Chatbot with Secure API Key")
