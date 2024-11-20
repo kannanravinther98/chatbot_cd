@@ -2,36 +2,26 @@ import streamlit as st
 import openai
 import os
 
-# Load environment variables from a .env file (if using for local development)
-
-# Embed the OpenAI API key securely
-API_KEY = KANNAN  # Replace with your key in .env or environment variable
-
-# Allow user to override the key if it's not set via environment variables
-if not API_KEY:
-    st.warning("No API key found in environment. Please enter your API key below.")
-    API_KEY = st.text_input("OpenAI API Key", type="password")
-else:
-    st.success("Using the API key from environment.")
+# Use the API key from the GitHub Actions secret (e.g., 'KANNAN')
+API_KEY = os.getenv("KANNAN")
 
 if not API_KEY:
-    st.info("Please provide a valid OpenAI API key to continue.", icon="🗝️")
+    st.error("No API key found. Please ensure the 'KANNAN' secret is set correctly in GitHub Actions.")
 else:
     # Set the OpenAI API key
     openai.api_key = API_KEY
 
     # Show title and description
-    st.title("💬 Chatbot with Multiple Models")
+    st.title("💬 Chatbot")
     st.write(
-        "This is a simple chatbot powered by OpenAI's models. You can select the model "
-        "you want to use and chat interactively. To use this app, ensure you have a valid API key."
+        "This is a chatbot powered by OpenAI's models. You can ask it anything and get responses!"
     )
 
     # Sidebar for model selection
     st.sidebar.title("Settings")
     selected_model = st.sidebar.selectbox(
         "Select a model",
-        options=["gpt-3.5-turbo", "gpt-4", "gpt-4-turbo"],
+        options=["gpt-3.5-turbo", "gpt-4"],
         index=0,
     )
 
@@ -45,13 +35,13 @@ else:
             st.markdown(message["content"])
 
     # Chat input field
-    if prompt := st.chat_input("What would you like to ask?"):
-        # Add user's input to chat history
+    if prompt := st.chat_input("Ask me anything:"):
+        # Add user input to chat history
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Generate a response using the selected OpenAI model
+        # Generate a response using OpenAI
         try:
             response = openai.ChatCompletion.create(
                 model=selected_model,
@@ -61,10 +51,10 @@ else:
                 ],
             )
 
-            # Extract and display assistant's response
+            # Add assistant response to chat history
             assistant_message = response.choices[0].message["content"]
             with st.chat_message("assistant"):
                 st.markdown(assistant_message)
             st.session_state.messages.append({"role": "assistant", "content": assistant_message})
-        except openai.error.OpenAIError as e:
+        except Exception as e:
             st.error(f"An error occurred: {e}")
