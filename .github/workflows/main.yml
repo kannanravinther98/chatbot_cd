@@ -22,5 +22,5 @@ jobs:
 
       - name: Run Streamlit App
         env:
-          KANNAN: ${{ secrets.KANNAN }}
+          kannan: ${{ secrets.KANNAN }}
         run: streamlit run streamlit_app.py --server.port 8501
